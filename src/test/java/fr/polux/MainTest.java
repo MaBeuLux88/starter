@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class MainTest {
 
     @Test
-    public void trueShoudBeTrue() {
+    public void trueShouldBeTrue() {
         assertThat(true).isTrue();
     }
 
