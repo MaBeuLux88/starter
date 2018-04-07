@@ -1,12 +1,45 @@
 #!/usr/bin/env bash
-if [[ ${1} =~ ^[a-z][0-9a-z-]*$ ]]; then
-    rm -rf .git
-    sed -i s/starter/$1/g pom.xml
+function usage {
+  message="$(cat <<EOF
+./init [OPTIONS] PROJECT_NAME
+
+OPTIONS:
+  -ng, --no-git
+      Will not initialise a new git project.
+  
+PROJECT_NAME must validate the regex "^[a-z][0-9a-z-]*$".
+EOF
+)"
+  echo "${message}" >&2
+  exit 1
+}
+
+function setProjectName {
+  if ! [[ ${1} =~ ^[a-z][0-9a-z-]*$ ]]; then
+    usage
+  fi
+  projectName=$1
+}
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    -h|--help) usage;;
+    -ng|--no-git) noGit="true"; shift 1;;
+
+    -*) echo "unknown option: $1" >&2; usage;;
+    *) setProjectName "$1"; shift 1;;
+  esac
+done
+
+if [[ -z ${projectName} ]]; then
+  usage
+fi
+
+rm -rf .git init.sh
+sed -i s/starter/${projectName}/g pom.xml
+if [[ ${noGit} != "true" ]]; then
     git init
-    echo "git remote add origin <LINK>"
-    echo "git push -u origin master"
-    rm -f init.sh
-else
-    echo "./init project-name"
-    echo "'project-name' must validate the regex \"^[a-z][0-9a-z-]*$\"."
+    echo "You can now run these commands if you want:"
+    echo "> git remote add origin <LINK>"
+    echo "> git push -u origin master"
 fi
