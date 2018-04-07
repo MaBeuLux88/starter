@@ -35,11 +35,13 @@ if [[ -z ${projectName} ]]; then
   usage
 fi
 
-rm -rf .git init.sh
 sed -i s/starter/${projectName}/g pom.xml
-if [[ ${noGit} != "true" ]]; then
-    git init
-    echo "You can now run these commands if you want:"
-    echo "> git remote add origin <LINK>"
-    echo "> git push -u origin master"
+rm -rf .git init.sh
+if [[ ${noGit} = "true" ]]; then
+  rm -f .gitignore
+else
+  git init -q
+  echo "You can now run these commands if you want:"
+  echo "> git remote add origin <LINK>"
+  echo "> git push -u origin master"
 fi
