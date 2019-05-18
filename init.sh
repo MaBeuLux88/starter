@@ -21,7 +21,7 @@ function setProjectName {
   projectName=$1
 }
 
-while [ "$#" -gt 0 ]; do
+while [[ "$#" -gt 0 ]]; do
   case "$1" in
     -h|--help) usage;;
     -ng|--no-git) noGit="true"; shift 1;;

@@ -1,13 +1,13 @@
 package fr.polux;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class MainTest {
+class MainTest {
 
     @Test
-    public void trueShouldBeTrue() {
+    void trueShouldBeTrue() {
         assertThat(true).isTrue();
     }
 
